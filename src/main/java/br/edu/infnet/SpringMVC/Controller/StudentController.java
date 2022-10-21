@@ -2,6 +2,7 @@ package br.edu.infnet.SpringMVC.Controller;
 
 
 import br.edu.infnet.SpringMVC.Model.Domain.Student;
+import br.edu.infnet.SpringMVC.Model.Repository.AlunoRepository;
 import br.edu.infnet.SpringMVC.Model.service.StudentService;
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class StudentController {
-     StudentService alunoService = new StudentService();
+     AlunoRepository alunoRepository = new AlunoRepository();
     
     @RequestMapping("")
     public String consulta(Model model) {
         
-        model.addAttribute("lista", alunoService.consultarAlunos());
+        model.addAttribute("lista", alunoRepository.consultarAlunos());
         return "consulta";
     }
     
@@ -35,7 +36,7 @@ public class StudentController {
     @RequestMapping("cadastrar")
     public String cadastro(Model model, Student aluno) {
         
-        alunoService.incluirAluno(aluno);
+        alunoRepository.incluirAluno(aluno);
         return "redirect:/";
     }
     
@@ -43,7 +44,7 @@ public class StudentController {
     public ModelAndView alterar(@RequestParam int id) {
         ModelAndView mav = new ModelAndView("alterar");
         
-        Student aluno = alunoService.consultarAluno(id);
+        Student aluno = alunoRepository.consultarAluno(id);
         mav.addObject("aluno", aluno);
         return mav;
     }
@@ -51,24 +52,25 @@ public class StudentController {
     @RequestMapping("salvaraluno")
     public String salvarAluno(@ModelAttribute("aluno") Student aluno) {
         
-        alunoService.alterarAluno(aluno);
+        alunoRepository.alterarAluno(aluno);
         return "redirect:/";
     }
     
     @RequestMapping("excluir")
     public String excluir(@RequestParam int id) {
         
-        alunoService.excluirAluno(id);
+        alunoRepository.excluirAluno(id);
         return "redirect:/";
     }
-    
-    @RequestMapping("procurar")
-    public ModelAndView procurar(@RequestParam String keyword) {
-        List<Student> result = alunoService.procurarAlunos(keyword);
-        ModelAndView mav = new ModelAndView("procurar");
-        mav.addObject("result", result);
-        return mav;
-    }
+//    
+//    @RequestMapping("procurar")
+//    public ModelAndView procurar(@RequestParam String keyword) {
+//        List<Student> result = alunoService.procurarAlunos(keyword);
+//        ModelAndView mav = new ModelAndView("procurar");
+//        mav.addObject("result", result);
+//        return mav;
+//    }
 }
+
 
 

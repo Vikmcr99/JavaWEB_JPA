@@ -11,7 +11,7 @@
     <body>
         <div class="container">
             <h1>Consulta de Alunos</h1>
-            <form>method="get" action="procurar"
+            <form method="get" action="procurar">
                 <input type="texto" name ="keyword">
                 <input type="submit" value="Proucurar">
             </form>
